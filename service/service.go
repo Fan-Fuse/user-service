@@ -27,6 +27,11 @@ func (s *server) GetUser(ctx context.Context, in *proto.GetUserRequest) (*proto.
 		Id:       strconv.Itoa(int(user.ID)),
 		Name:     user.Name,
 		ImageUrl: user.ImageURL,
+		SpotifyUser: &proto.SpotifyUser{
+			AccessToken:  user.SpotifyToken,
+			RefreshToken: user.SpotifyRefreshToken,
+			Id:           user.SpotifyID,
+		},
 	}, nil
 }
 
