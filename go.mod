@@ -3,7 +3,7 @@ module github.com/Fan-Fuse/user-service
 go 1.21.4
 
 require (
-	github.com/Fan-Fuse/config-service v0.0.0-20240705120713-9c8e72c00d28
+	github.com/Fan-Fuse/config-service v0.0.0-20240705130120-98f1060bcd87
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.65.0
 	google.golang.org/protobuf v1.34.2

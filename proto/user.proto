@@ -28,6 +28,7 @@ message CreateUserRequest {
 
 message CreateUserResponse {
   bool success = 1;
+  string id = 2;
 }
 
 message SpotifyUser {

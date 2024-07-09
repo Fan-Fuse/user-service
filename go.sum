@@ -1,5 +1,5 @@
-github.com/Fan-Fuse/config-service v0.0.0-20240705120713-9c8e72c00d28 h1:K/bKNzsB9W3o+y3K/37CLG5ep41R0Bp42O1K6EGz17I=
-github.com/Fan-Fuse/config-service v0.0.0-20240705120713-9c8e72c00d28/go.mod h1:cjo+zGLuGnB7k8i7BhxvKhmcfl6VXQbmD+sqgRtLxmE=
+github.com/Fan-Fuse/config-service v0.0.0-20240705130120-98f1060bcd87 h1:oXWEaTnJkQzptHovevFlyuo/vqcgqFPrdIhmmswdan8=
+github.com/Fan-Fuse/config-service v0.0.0-20240705130120-98f1060bcd87/go.mod h1:cjo+zGLuGnB7k8i7BhxvKhmcfl6VXQbmD+sqgRtLxmE=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=

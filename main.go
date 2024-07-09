@@ -9,12 +9,8 @@ import (
 
 	"github.com/Fan-Fuse/user-service/clients"
 	"github.com/Fan-Fuse/user-service/db"
-	pb "github.com/Fan-Fuse/user-service/proto"
+	"github.com/Fan-Fuse/user-service/service"
 )
-
-type server struct {
-	pb.UnimplementedUserServiceServer
-}
 
 func init() {
 	// Initialize logger
@@ -39,7 +35,7 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	pb.RegisterUserServiceServer(s, &server{})
+	service.RegisterServer(s)
 
 	zap.S().Info("Server started on port 50051")
 	if err := s.Serve(lis); err != nil {

@@ -65,6 +65,15 @@ func getKeys() {
 	}
 }
 
+func GetKey(key string) string {
+	for i := range Config {
+		if Config[i].Key == key {
+			return Config[i].Value
+		}
+	}
+	return ""
+}
+
 // subscribeToKeys subscribes to the keys in a background goroutine, updating the Config slice
 func subscribeToKeys() {
 	stream, err := configClient.Subscribe(context.Background(), &proto.SubscribeRequest{
