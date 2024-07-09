@@ -22,6 +22,8 @@ var Config = []configEntry{
 	{Key: "APP_ENV", Value: ""},
 	{Key: "APP_VERSION", Value: ""},
 	{Key: "USER_REGISTRATION_OPEN", Value: ""},
+	{Key: "CRAWLER_INTERVAL_USER", Value: ""},
+	{Key: "CRAWLER_BATCH_SIZE", Value: ""},
 }
 
 // NewConfigServiceClient creates a new ConfigServiceClient.

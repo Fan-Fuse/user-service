@@ -4,9 +4,12 @@ package user;
 
 option go_package = "proto/";
 
+import "google/protobuf/empty.proto";
+
 service UserService {
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
+  rpc GetUpdateableUser(google.protobuf.Empty) returns (GetUpdateableUsersResponse) {}
 }
 
 message GetUserRequest {
@@ -36,4 +39,13 @@ message SpotifyUser {
   string name = 2;
   string access_token = 3;
   string refresh_token = 4;
+}
+
+message UpdateableUser {
+  string id = 1; // fanfuse user id
+  SpotifyUser spotify_user = 2;
+}
+
+message GetUpdateableUsersResponse {
+  repeated UpdateableUser users = 1;
 }

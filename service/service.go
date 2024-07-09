@@ -7,6 +7,7 @@ import (
 	"github.com/Fan-Fuse/user-service/db"
 	"github.com/Fan-Fuse/user-service/proto"
 	"google.golang.org/grpc"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type server struct {
@@ -43,5 +44,28 @@ func (s *server) CreateUser(ctx context.Context, in *proto.CreateUserRequest) (*
 	return &proto.CreateUserResponse{
 		Success: true,
 		Id:      strconv.Itoa(int(user.ID)),
+	}, nil
+}
+
+func (s *server) GetUpdateableUsers(ctx context.Context, in *emptypb.Empty) (*proto.GetUpdateableUsersResponse, error) {
+	users, err := db.GetUpdateableUsers(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var responseUsers []*proto.UpdateableUser
+	for _, user := range users {
+		responseUsers = append(responseUsers, &proto.UpdateableUser{
+			Id: strconv.Itoa(int(user.ID)),
+			SpotifyUser: &proto.SpotifyUser{
+				AccessToken:  user.SpotifyToken,
+				RefreshToken: user.SpotifyRefreshToken,
+				Id:           user.SpotifyID,
+			},
+		})
+	}
+
+	return &proto.GetUpdateableUsersResponse{
+		Users: responseUsers,
 	}, nil
 }

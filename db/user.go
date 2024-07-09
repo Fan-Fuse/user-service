@@ -2,6 +2,8 @@ package db
 
 import (
 	"context"
+	"strconv"
+	"time"
 
 	"github.com/Fan-Fuse/user-service/clients"
 	"google.golang.org/grpc/codes"
@@ -15,8 +17,9 @@ type User struct {
 	Age                 int
 	ImageURL            string
 	SpotifyID           string
-	SpotifyToken        string // This is the access token, we will use it to request user-specific data
-	SpotifyRefreshToken string // This is the refresh token, we will use it to get a new access token
+	SpotifyToken        string    // This is the access token, we will use it to request user-specific data
+	SpotifyRefreshToken string    // This is the refresh token, we will use it to get a new access token
+	SpotifyLastUpdated  time.Time // This is the last time we updated the user's Spotify data
 }
 
 // GetUser gets a user by ID
@@ -55,9 +58,36 @@ func CreateUser(ctx context.Context, name, imageURL, spotifyID, spotifyToken, sp
 		SpotifyID:           spotifyID,
 		SpotifyToken:        spotifyToken,
 		SpotifyRefreshToken: spotifyRefreshToken,
+		SpotifyLastUpdated:  time.Now().Add(-time.Hour * 48), // We want to queue the user for an update soon, so we set this to 48 hours ago
 	}
 	if err := DB.Create(&user).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil
+}
+
+// GetUpdateableUsers gets users that need to be updated
+func GetUpdateableUsers(ctx context.Context) ([]*User, error) {
+	// Retrieve the relevant keys from the config service
+	s_interval := clients.GetKey("CRAWLER_INTERVAL_USER")
+	interval, err := strconv.ParseInt(s_interval, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+
+	s_limit := clients.GetKey("CRAWLER_BATCH_SIZE")
+	limit, err := strconv.ParseInt(s_limit, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+
+	// Calculate the time that we need to look back to
+	lookback := time.Now().Add(-time.Second * time.Duration(interval))
+
+	// Get the users that need to be updated
+	var users []*User
+	if err := DB.Where("spotify_last_updated < ?", lookback).Limit(int(limit)).Find(&users).Error; err != nil {
+		return nil, err
+	}
+	return users, nil
 }
