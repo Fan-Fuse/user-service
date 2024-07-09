@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
+	"github.com/Fan-Fuse/user-service/clients"
 	"github.com/Fan-Fuse/user-service/db"
 	pb "github.com/Fan-Fuse/user-service/proto"
 )
@@ -23,6 +24,9 @@ func init() {
 	}
 
 	zap.ReplaceGlobals(logger)
+
+	// Initialize config service client
+	clients.InitConfig(os.Getenv("CONFIG_ADDRESS"))
 
 	// Initialize database
 	db.Init()

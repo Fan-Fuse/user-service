@@ -16,12 +16,23 @@ message GetUserRequest {
 message GetUserResponse {
   string id = 1;
   string name = 2;
+  string image_url = 3;
+  SpotifyUser spotify_user = 4;
 }
 
 message CreateUserRequest {
   string name = 1;
+  string image_url = 2;
+  SpotifyUser spotify_user = 3;
 }
 
 message CreateUserResponse {
+  bool success = 1;
+}
+
+message SpotifyUser {
   string id = 1;
+  string name = 2;
+  string access_token = 3;
+  string refresh_token = 4;
 }
